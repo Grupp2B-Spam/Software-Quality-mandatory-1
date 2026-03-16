@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# Prevent recursive HTTP requests
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Redirect requests to php_fake_info/* to php_fake_info/api
+RewriteRule ^ index.php [QSA,L]
