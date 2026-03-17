@@ -1,4 +1,4 @@
-package demo.info;
+package com.example.demo.info;
 public class Info {
 
     public static final String HOST = "localhost";
