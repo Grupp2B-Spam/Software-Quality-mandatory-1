@@ -1,9 +1,20 @@
-FROM php:8.2-apache
+FROM maven:3.9.8-eclipse-temurin-17 AS build
 
-RUN a2enmod rewrite
+WORKDIR /app
 
-RUN docker-php-ext-install mysqli pdo pdo_mysql
+COPY pom.xml .
+COPY src ./src
+COPY data ./data
 
-COPY apache/000-default.conf /etc/apache2/sites-available/000-default.conf
+RUN mvn clean package -DskipTests
 
-WORKDIR /var/www/html
+FROM eclipse-temurin:17-jre
+
+WORKDIR /app
+
+COPY --from=build /app/target/*.jar app.jar
+COPY --from=build /app/data ./data
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
