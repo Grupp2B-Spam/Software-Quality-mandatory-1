@@ -1,1 +1,0 @@
-# Software-Quality-mandatory-1

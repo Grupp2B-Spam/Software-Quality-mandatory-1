@@ -1,0 +1,9 @@
+{
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.project.sourcePaths": [
+        "fake_info-main/src",
+        "fake_info-main/info",
+        "fake_info-main",
+        "fake_info/src/main/java/com/example/demo"
+    ]
+}
