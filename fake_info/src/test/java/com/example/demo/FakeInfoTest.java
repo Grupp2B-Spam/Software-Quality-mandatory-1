@@ -55,8 +55,11 @@ class FakeInfoTest {
                 assertEquals(1,lastCPRIndex % 2, "Expected "+firstName+" cpr to be odd, but was "+cpr);
             }
 
+            //First 2 digits should be the day
             assertTrue(32> cprDate && cprDate > 0, "Expected date to be valid, but was "+cprDate);
+            //Third and fourth digit should be the month
             assertTrue(12>= cprMonth && cprMonth > 0, "Expected month to be valid, but was "+cprMonth);
+            //Fifth and sixth digit should be the year
             assertTrue(100 > cprYear && cprYear >= 0, "Expected year to be valid, but was "+cprYear);
         }
     }
