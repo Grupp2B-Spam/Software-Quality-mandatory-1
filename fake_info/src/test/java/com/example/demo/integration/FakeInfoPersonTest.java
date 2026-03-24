@@ -1,134 +1,124 @@
 package com.example.demo.integration;
 
 import com.example.demo.FakeInfo;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class FakeInfoPersonTest {
 
-    private static final int NUMBER_OF_FIELDS = 3;
-
-    private static Stream<String> expectedFieldNames() {
-        return Stream.of("firstName", "lastName", "gender");
-    }
-
-    private static Stream<String> unexpectedFieldNames() {
-        return Stream.of("CPR", "birthDate", "address", "phoneNumber");
-    }
+    int numberOfPersonFields = 7;
 
     @Test
-        // Verifies that the method returns a non-null result with exactly the expected number of fields.
-    void getFullNameAndGender_shouldReturnNonNullData() {
+        // Verifies that a single fake person contains all expected fields.
+    void getFakePerson_shouldContainExpectedFields() {
         FakeInfo person = new FakeInfo();
 
-        Map<String, Object> personData = person.getFullNameAndGender();
+        Map<String, Object> personData = person.getFakePerson();
 
         assertNotNull(personData);
-        assertEquals(NUMBER_OF_FIELDS, personData.size());
-    }
-
-    @ParameterizedTest
-    @MethodSource("expectedFieldNames")
-        // Verifies that each required field is present in the result.
-    void getFullNameAndGender_shouldContainExpectedFields(String fieldName) {
-        FakeInfo person = new FakeInfo();
-
-        Map<String, Object> personData = person.getFullNameAndGender();
-
-        assertTrue(personData.containsKey(fieldName));
-    }
-
-    @ParameterizedTest
-    @MethodSource("unexpectedFieldNames")
-        // Verifies that fields from other functionalities are not included.
-    void getFullNameAndGender_shouldNotContainUnexpectedFields(String fieldName) {
-        FakeInfo person = new FakeInfo();
-
-        Map<String, Object> personData = person.getFullNameAndGender();
-
-        assertFalse(personData.containsKey(fieldName));
-    }
-
-    @ParameterizedTest
-    @MethodSource("expectedFieldNames")
-        // Verifies that all required fields have non-null values.
-    void getFullNameAndGender_shouldReturnNoNullValues(String fieldName) {
-        FakeInfo person = new FakeInfo();
-
-        Map<String, Object> personData = person.getFullNameAndGender();
-
-        assertNotNull(personData.get(fieldName));
-    }
-
-    @Test
-        // Verifies that generated names are not blank.
-    void getFullNameAndGender_shouldReturnNonEmptyNames() {
-        FakeInfo person = new FakeInfo();
-
-        Map<String, Object> personData = person.getFullNameAndGender();
-
-        String firstName = personData.get("firstName").toString();
-        String lastName = personData.get("lastName").toString();
-
-        assertFalse(firstName.isBlank());
-        assertFalse(lastName.isBlank());
-    }
-
-    @Test
-        // Verifies that gender is within the allowed domain.
-    void getFullNameAndGender_shouldReturnValidGender() {
-        FakeInfo person = new FakeInfo();
-
-        Map<String, Object> personData = person.getFullNameAndGender();
-
-        String gender = personData.get("gender").toString();
-
-        assertTrue(gender.equals("male") || gender.equals("female"));
-    }
-
-    @Test
-        // Verifies that generated names do not contain digits or disallowed special characters.
-    void getFullNameAndGender_shouldReturnNamesWithoutDigitsOrSpecialCharacters() {
-        FakeInfo person = new FakeInfo();
-
-        Map<String, Object> personData = person.getFullNameAndGender();
-
-        String firstName = personData.get("firstName").toString();
-        String lastName = personData.get("lastName").toString();
-
-        assertFalse(firstName.matches(".*[0-9,!@%^$&#].*"));
-        assertFalse(lastName.matches(".*[0-9,!@%^$&#].*"));
-    }
-
-    @RepeatedTest(10)
-        // Verifies that the output contract is respected across repeated executions.
-    void getFullNameAndGender_shouldConsistentlyRespectContract() {
-        FakeInfo person = new FakeInfo();
-
-        Map<String, Object> personData = person.getFullNameAndGender();
-
-        assertNotNull(personData);
-        assertEquals(NUMBER_OF_FIELDS, personData.size());
-
+        assertEquals(numberOfPersonFields, personData.size());
+        assertTrue(personData.containsKey("CPR"));
         assertTrue(personData.containsKey("firstName"));
         assertTrue(personData.containsKey("lastName"));
         assertTrue(personData.containsKey("gender"));
+        assertTrue(personData.containsKey("birthDate"));
+        assertTrue(personData.containsKey("address"));
+        assertTrue(personData.containsKey("phoneNumber"));
+    }
 
-        String firstName = personData.get("firstName").toString();
-        String lastName = personData.get("lastName").toString();
-        String gender = personData.get("gender").toString();
+    @Test
+        // Verifies that a single fake person does not contain null values in required fields.
+    void getFakePerson_shouldReturnNoNullValues() {
+        FakeInfo person = new FakeInfo();
 
-        assertFalse(firstName.isBlank());
-        assertFalse(lastName.isBlank());
-        assertTrue(gender.equals("male") || gender.equals("female"));
-        assertFalse(firstName.matches(".*[0-9,!@%^$&#].*"));
-        assertFalse(lastName.matches(".*[0-9,!@%^$&#].*"));
+        Map<String, Object> personData = person.getFakePerson();
+
+        assertNotNull(personData.get("CPR"));
+        assertNotNull(personData.get("firstName"));
+        assertNotNull(personData.get("lastName"));
+        assertNotNull(personData.get("gender"));
+        assertNotNull(personData.get("birthDate"));
+        assertNotNull(personData.get("address"));
+        assertNotNull(personData.get("phoneNumber"));
+    }
+
+    @Test
+        // Verifies that bulk generation returns the requested minimum valid amount.
+    void getFakePersons_shouldReturnTwoPersons() {
+        FakeInfo person = new FakeInfo();
+
+        List<Map<String, Object>> persons = person.getFakePersons(2);
+
+        assertNotNull(persons);
+        assertEquals(2, persons.size());
+    }
+
+    @Test
+        // Verifies that bulk generation returns the requested maximum valid amount.
+    void getFakePersons_shouldReturnOneHundredPersons() {
+        FakeInfo person = new FakeInfo();
+
+        List<Map<String, Object>> persons = person.getFakePersons(100);
+
+        assertNotNull(persons);
+        assertEquals(100, persons.size());
+    }
+
+    @Test
+        // Verifies that values below the minimum bulk size are normalized to 2.
+    void getFakePersons_shouldNormalizeAmountBelowMinimum() {
+        FakeInfo person = new FakeInfo();
+
+        List<Map<String, Object>> persons = person.getFakePersons(1);
+
+        assertNotNull(persons);
+        assertEquals(2, persons.size());
+    }
+
+    @Test
+        // Verifies that values above the maximum bulk size are normalized to 100.
+    void getFakePersons_shouldNormalizeAmountAboveMaximum() {
+        FakeInfo person = new FakeInfo();
+
+        List<Map<String, Object>> persons = person.getFakePersons(101);
+
+        assertNotNull(persons);
+        assertEquals(100, persons.size());
+    }
+
+    @Test
+        // Verifies that each generated person in a bulk result respects the expected contract.
+    void getFakePersons_shouldReturnValidPersonObjects() {
+        FakeInfo person = new FakeInfo();
+
+        List<Map<String, Object>> persons = person.getFakePersons(5);
+
+        assertEquals(5, persons.size());
+
+        for (Map<String, Object> personData : persons) {
+            assertNotNull(personData);
+            assertEquals(numberOfPersonFields, personData.size());
+
+            assertTrue(personData.containsKey("CPR"));
+            assertTrue(personData.containsKey("firstName"));
+            assertTrue(personData.containsKey("lastName"));
+            assertTrue(personData.containsKey("gender"));
+            assertTrue(personData.containsKey("birthDate"));
+            assertTrue(personData.containsKey("address"));
+            assertTrue(personData.containsKey("phoneNumber"));
+
+            assertFalse(personData.get("firstName").toString().isBlank());
+            assertFalse(personData.get("lastName").toString().isBlank());
+
+            assertFalse(personData.get("firstName").toString().matches(".*[0-9,!@%^$&#].*"));
+            assertFalse(personData.get("lastName").toString().matches(".*[0-9,!@%^$&#].*"));
+
+            String gender = personData.get("gender").toString();
+            assertTrue(gender.equals("male") || gender.equals("female"));
+        }
     }
 }
