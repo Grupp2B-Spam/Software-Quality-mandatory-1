@@ -1,6 +1,7 @@
 name: Build and test backend
 on: 
-  pull_request: 
+  pull_request:
+  push: 
     branches:
       - change/molsen/add-cpr-name-gender-test
   workflow_dispatch:
