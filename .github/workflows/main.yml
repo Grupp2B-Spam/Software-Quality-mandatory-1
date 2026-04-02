@@ -52,5 +52,11 @@ jobs:
 
       - name: Run unit tests
         run: mvn test
+        env:
+          DB_HOST: localhost
+          DB_NAME: addresses
+          DB_USER: root
+          DB_PASSWORD: ''
+        
     
   
