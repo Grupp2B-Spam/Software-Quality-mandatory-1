@@ -47,6 +47,9 @@ jobs:
       - name: Start docker compose
         run: docker compose up -d
 
+      - name: Wait
+        run: sleep 10
+
       - name: Run unit tests
         run: mvn test
     
