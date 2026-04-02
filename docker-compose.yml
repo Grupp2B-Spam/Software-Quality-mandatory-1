@@ -1,6 +1,12 @@
 services:
+  frontend:
+      build: ./js_fake_info_frontend-main
+      ports:
+      - "3000:80"
+
+
   web:
-    build: .
+    build: ./fake_info
     ports:
       - '8081:8080'
     depends_on:
