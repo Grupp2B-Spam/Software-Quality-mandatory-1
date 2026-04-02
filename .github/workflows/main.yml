@@ -9,7 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+    defaults:
+      run:
+        working-directory: ./fake_info
     steps:
       - uses: actions/checkout@v4
 
@@ -31,6 +33,9 @@ jobs:
 
   unit-tests:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./fake_info
     needs: build
     steps:
       - uses: actions/checkout@v4
