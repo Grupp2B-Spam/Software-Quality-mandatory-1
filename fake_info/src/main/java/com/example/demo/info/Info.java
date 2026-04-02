@@ -4,7 +4,7 @@ public class Info {
     public static final String HOST = "localhost";
     public static final String DB_NAME = "addresses";
     public static final String USER = "root";
-    public static final String PASSWORD = "frigga2809";
+    public static final String PASSWORD = "";
 
     public static String host() {
         String value = System.getenv("DB_HOST");
