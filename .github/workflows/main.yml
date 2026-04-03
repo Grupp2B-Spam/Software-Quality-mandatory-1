@@ -3,7 +3,7 @@ on:
   pull_request:
   push: 
     branches:
-      - change/molsen/add-cpr-name-gender-test
+      - main
   workflow_dispatch:
     
 jobs:
@@ -57,6 +57,3 @@ jobs:
           DB_NAME: addresses
           DB_USER: root
           DB_PASSWORD: ''
-        
-    
-  
