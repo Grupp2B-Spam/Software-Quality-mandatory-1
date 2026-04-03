@@ -1,0 +1,59 @@
+name: Build and test backend
+on: 
+  pull_request:
+  push: 
+    branches:
+      - main
+  workflow_dispatch:
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./fake_info
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java version
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Build with maven
+        run: mvn clean package -DskipTests
+
+      - name: Upload jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: java-app
+          path: target/*.jar
+
+  unit-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./fake_info
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+      - name: Start docker compose
+        run: docker compose up -d
+
+      - name: Wait
+        run: sleep 10
+
+      - name: Run unit tests
+        run: mvn test
+        env:
+          DB_HOST: localhost
+          DB_NAME: addresses
+          DB_USER: root
+          DB_PASSWORD: ''
