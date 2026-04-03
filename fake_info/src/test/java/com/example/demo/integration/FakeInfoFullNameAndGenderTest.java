@@ -131,34 +131,4 @@ class FakeInfoFullNameAndGenderTest {
 
 
 
-//    @Test
-//    // test to make sure that within one test scenario, multiple generated persons should all be valid
-//    void getFullNameAndGender_shouldReturnValidResultsForSeveralGeneratedPersons() {
-//        int numberOfPersons = 5;
-//        ArrayList<FakeInfo> personList = new ArrayList<>();
-//
-//        for (int i = 0; i < numberOfPersons; i++) {
-//            personList.add(new FakeInfo());
-//        }
-//
-//        for (FakeInfo person : personList) {
-//            Map<String, Object> personData = person.getFullNameAndGender();
-//
-//            assertNotNull(personData);
-//            assertTrue(personData.containsKey("firstName"));
-//            assertTrue(personData.containsKey("lastName"));
-//            assertTrue(personData.containsKey("gender"));
-//
-//            String firstName = personData.get("firstName").toString();
-//            String lastName = personData.get("lastName").toString();
-//            String gender = personData.get("gender").toString();
-//
-//            assertFalse(firstName.isBlank());
-//            assertFalse(lastName.isBlank());
-//            assertTrue(gender.equals("male") || gender.equals("female"));
-//
-//            assertFalse(firstName.matches(".*[0-9,!@%^$&#].*"));
-//            assertFalse(lastName.matches(".*[0-9,!@%^$&#].*"));
-//        }
-//    }
 }
