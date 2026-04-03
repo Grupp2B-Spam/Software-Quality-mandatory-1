@@ -8,5 +8,5 @@
 8. ~Return all information for a fake person.        
 (CPR, first name, last name, gender, date of birth, address, mobile phone number)~ - Patrick
 9. ~Return fake person information in bulk (all information for 2 to 100 persons)~ - Patrick
-10. end 2 end test for happy path (playwright) - Sebastian
+10. ~end 2 end test for happy path (playwright)~ - Sebastian
 11. endpoint tests (Playwright) - Alexander og Mikkel
