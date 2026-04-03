@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { beforeEach } from 'node:test';
 
 test.beforeEach(async ({ page }) => {
-  page.goto('');
+  await page.goto('');
   await expect(page.getByRole('heading')).toContainText('Fake Personal Data Generator');
 
 });
