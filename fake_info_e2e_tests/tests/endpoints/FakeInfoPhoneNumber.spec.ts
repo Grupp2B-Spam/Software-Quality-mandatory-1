@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('FakeInfoController /phone endpoint', () => {
-    const endpoint = 'phone';
+    const endpoint = process.env.API_URL + 'phone';
 
     test('should return a valid phone number', async ({ request }) => {
         const response = await request.get(endpoint);
@@ -48,7 +48,7 @@ test.describe('FakeInfoController /phone endpoint', () => {
     });
 
     test('should return 404 for invalid phone endpoint', async ({ request }) => {
-        const response = await request.get('phone-invalid');
+        const response = await request.get(process.env.API_URL + 'phone-invalid');
 
         expect(response.status()).toBe(404);
 

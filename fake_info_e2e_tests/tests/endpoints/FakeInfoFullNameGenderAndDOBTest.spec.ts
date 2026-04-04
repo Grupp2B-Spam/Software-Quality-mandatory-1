@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('FakeInfoController /name-gender-dob endpoint', () => {
-    const endpoint = 'http://localhost:8081/name-gender-dob';
+    const endpoint = process.env.API_URL + 'name-gender-dob';
     const expectedFields = ['firstName', 'lastName', 'gender', 'birthDate'];
 
     test('should return valid full name, gender and birthDate data', async ({ request }) => {
@@ -81,7 +81,7 @@ test.describe('FakeInfoController /name-gender-dob endpoint', () => {
         }
 
         test('name-gender-dob should return 404 for invalid endpoint', async ({ request }) => {
-            const response = await request.get('http://localhost:8081/name-gender-dob-wrong');
+            const response = await request.get(process.env.API_URL + 'name-gender-dob-wrong');
 
             expect(response.status()).toBe(404);
 
