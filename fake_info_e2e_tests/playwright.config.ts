@@ -29,14 +29,13 @@ export default defineConfig({
     baseURL: process.env.BASE_URL,
     video:{
       mode: 'retain-on-failure', // should only be necessary if test fails. Argument can be made for first retry though
-      size: { width: 640, height: 480 }
     },
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: 'retain-on-failure',
   },
 
   expect: {
-    toHaveScreenshot: { maxDiffPixels: 600 },
+    toHaveScreenshot: { maxDiffPixelRatio: 0.01 },
   },
 
   /* Configure projects for major browsers */
