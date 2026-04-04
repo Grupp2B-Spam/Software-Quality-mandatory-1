@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('FakeInfoController /name-gender endpoint', () => {
     test('should return valid full name and gender data', async ({ request }) => {
-        const response = await request.get('http://localhost:8080/name-gender');
+        const response = await request.get('http://localhost:8081/name-gender');
 
         expect(response.status()).toBe(200);
         expect(response.ok()).toBeTruthy();
@@ -45,7 +45,7 @@ test.describe('FakeInfoController /name-gender endpoint', () => {
 
     test('should consistently respect contract over multiple calls', async ({ request }) => {
         for (let i = 0; i < 10; i++) {
-            const response = await request.get('http://localhost:8080/name-gender');
+            const response = await request.get('http://localhost:8081/name-gender');
 
             expect(response.status()).toBe(200);
             expect(response.ok()).toBeTruthy();
@@ -72,7 +72,7 @@ test.describe('FakeInfoController /name-gender endpoint', () => {
         }
             //Negative test for invalid endpoint
         test('should return 404 for invalid endpoint', async ({ request }) => {
-            const response = await request.get('http://localhost:8080/wrong');
+            const response = await request.get('http://localhost:8081/wrong');
 
             expect(response.status()).toBe(404);
         });
