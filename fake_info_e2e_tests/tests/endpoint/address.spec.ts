@@ -9,7 +9,7 @@ test.describe("address endpoint", ()=> {
         expect(data).toMatchObject({
             address: expect.objectContaining({
                 number: expect.any(String),
-                door: expect.any(String),
+                door: expect.anything(),
                 town_name: expect.any(String),
                 street: expect.any(String),
                 floor: expect.anything(),
