@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe("person endpoint", ()=> {
 
     test('Valid GET request returning 1 person', async ({ request }) => {
-        const response = await request.get('person');
+        const response = await request.get(process.env.API_URL + 'person');
         expect(response.status()).toBe(200);
         const data = await response.json();
         expect(data).toMatchObject({
