@@ -42,14 +42,14 @@ export default defineConfig({
   projects: [
     {
         name: 'api',
-        testDir: './tests/endpoint_tests',
+        testDir: './tests/endpoint',
         use: {
             baseURL: 'http://localhost:8081',
         },
     },
     {
         name: 'chromium',
-        testDir: './tests/e2e_tests',
+        testDir: './tests/e2e',
         use: { 
             ...devices['Desktop Chrome'],
             baseURL: 'http://localhost:3000',
@@ -57,7 +57,7 @@ export default defineConfig({
     },
     {
         name: 'firefox',
-        testDir: './tests/e2e_tests',
+        testDir: './tests/e2e',
         use: { 
             ...devices['Desktop Firefox'],
             baseURL: 'http://localhost:3000',
@@ -65,7 +65,7 @@ export default defineConfig({
     },
     {
         name: 'webkit',
-        testDir: './tests/e2e_tests',
+        testDir: './tests/e2e',
         use: { 
             ...devices['Desktop Safari'],
             baseURL: 'http://localhost:3000',
