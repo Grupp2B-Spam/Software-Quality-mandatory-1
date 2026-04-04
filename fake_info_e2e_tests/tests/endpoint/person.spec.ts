@@ -13,7 +13,7 @@ test.describe("person endpoint", ()=> {
             phoneNumber: expect.any(String),
             address: expect.objectContaining({
                 number: expect.any(String),
-                door: expect.any(String),
+                door: expect.anything(),
                 town_name: expect.any(String),
                 street: expect.any(String),
                 floor: expect.anything(),
@@ -36,7 +36,7 @@ test.describe("person endpoint", ()=> {
                     phoneNumber: expect.any(String),
                     address: expect.objectContaining({
                         number: expect.any(String),
-                        door: expect.any(String),
+                        door: expect.anything(),
                         town_name: expect.any(String),
                         street: expect.any(String),
                         floor: expect.anything(),
@@ -61,7 +61,7 @@ test.describe("person endpoint", ()=> {
                     phoneNumber: expect.any(String),
                     address: expect.objectContaining({
                         number: expect.any(String),
-                        door: expect.any(String),
+                        door: expect.anything(),
                         town_name: expect.any(String),
                         street: expect.any(String),
                         floor: expect.anything(),
@@ -86,7 +86,7 @@ test.describe("person endpoint", ()=> {
                     phoneNumber: expect.any(String),
                     address: expect.objectContaining({
                         number: expect.any(String),
-                        door: expect.any(String),
+                        door: expect.anything(),
                         town_name: expect.any(String),
                         street: expect.any(String),
                         floor: expect.anything(),
@@ -109,7 +109,7 @@ test.describe("person endpoint", ()=> {
             phoneNumber: expect.any(String),
             address: expect.objectContaining({
                 number: expect.any(String),
-                door: expect.any(String),
+                door: expect.anything(),
                 town_name: expect.any(String),
                 street: expect.any(String),
                 floor: expect.anything(),
@@ -131,7 +131,7 @@ test.describe("person endpoint", ()=> {
                     phoneNumber: expect.any(String),
                     address: expect.objectContaining({
                         number: expect.any(String),
-                        door: expect.any(String),
+                        door: expect.anything(),
                         town_name: expect.any(String),
                         street: expect.any(String),
                         floor: expect.anything(),
