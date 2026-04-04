@@ -70,5 +70,11 @@ test.describe('FakeInfoController /name-gender endpoint', () => {
             expect(lastName).not.toMatch(/[0-9,!@%^$&#]/);
             expect(['male', 'female']).toContain(gender);
         }
+
+        test('should return 404 for invalid endpoint', async ({ request }) => {
+            const response = await request.get('http://localhost:8080/wrong');
+
+            expect(response.status()).toBe(404);
+        });
     });
 });
