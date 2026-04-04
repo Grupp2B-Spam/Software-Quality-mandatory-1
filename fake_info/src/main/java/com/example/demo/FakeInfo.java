@@ -247,9 +247,9 @@ public class FakeInfo {
         return data;
     }
 
-    public Map<String,Object> getAddress() {
+    public Map<String,Map<String, Object>> getAddress() {
 
-        Map<String,Object> data = new HashMap<>();
+        Map<String,Map<String, Object>> data = new HashMap<>();
         data.put("address", address);
 
         return data;
