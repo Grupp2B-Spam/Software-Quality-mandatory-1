@@ -5,11 +5,14 @@ on:
   pull_request:
     branches: [ main, master ]
   workflow_dispatch:
-  
+
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./fake_info_e2e_tests
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
