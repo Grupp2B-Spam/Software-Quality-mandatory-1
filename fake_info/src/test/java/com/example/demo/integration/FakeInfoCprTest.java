@@ -26,7 +26,7 @@ class FakeInfoCprTest {
 
     @Test
         // test if cpr is 10 digits long
-    void getCpr_shouldReturnNonEmptyNames() {
+    void getCpr_shouldReturnNonCorrectLength() {
         FakeInfo person = new FakeInfo();
 
         String cpr = person.getCpr();
