@@ -79,15 +79,15 @@ test.describe('FakeInfoController /name-gender-dob endpoint', () => {
             const parts = birthDate.split('-');
             expect(parts.length).toBe(3);
         }
+    });
 
-        test('name-gender-dob should return 404 for invalid endpoint', async ({ request }) => {
-            const response = await request.get(process.env.API_URL + 'name-gender-dob-wrong');
+    test('name-gender-dob should return 404 for invalid endpoint', async ({ request }) => {
+        const response = await request.get(process.env.API_URL + 'name-gender-dob-wrong');
 
-            expect(response.status()).toBe(404);
+        expect(response.status()).toBe(404);
 
-            const body = await response.json();
-            expect(body).toHaveProperty('error');
-            expect(body.error).toBe('Incorrect API endpoint');
-        });
+        const body = await response.json();
+        expect(body).toHaveProperty('error');
+        expect(body.error).toBe('Incorrect API endpoint');
     });
 });
