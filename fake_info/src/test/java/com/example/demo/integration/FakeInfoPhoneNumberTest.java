@@ -24,7 +24,7 @@ public class FakeInfoPhoneNumberTest {
 
     @Test
         // Verifies that phoneNumber has valid format and an allowed prefix from the assignment requirements.
-    void getFakePerson_shouldReturnValidPhoneNumber() {
+    void getPhoneNumber_shouldReturnValidPhoneNumber() {
         FakeInfo person = new FakeInfo();
 
         Map<String, Object> personData = person.getFakePerson();
