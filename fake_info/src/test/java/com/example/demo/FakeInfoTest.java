@@ -47,7 +47,7 @@ class FakeInfoTest {
         }
 
         if (gender.equals("male")) {
-            //assertEquals(1,lastCPRIndex % 2, "Expected "+firstName+" cpr to be odd, but was "+cpr);
+            assertEquals(1,lastCPRIndex % 2, "Expected "+firstName+" cpr to be odd, but was "+cpr);
         }
 
             //First 2 digits should be the day
