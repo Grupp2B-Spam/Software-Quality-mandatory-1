@@ -25,7 +25,7 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Update/create playwright snapshots
-      run: npm run update-snap 
+      run: npx playwright test tests/e2e --update-snapshots
     - name: Run Playwright tests
       run: npx playwright test
     - uses: actions/upload-artifact@v4
