@@ -27,6 +27,7 @@ jobs:
     - name: Run Playwright tests
       run: npx playwright test
     - name: Check files
+      if: always()
       run: 'ls -a'
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
