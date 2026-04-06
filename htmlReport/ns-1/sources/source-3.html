@@ -1,0 +1,414 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > FakeInfo</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.demo</a>
+</div>
+
+<h1>Coverage Summary for Class: FakeInfo (com.example.demo)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">FakeInfo</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (19/19)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (34/34)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    99,2%
+  </span>
+  <span class="absValue">
+    (122/123)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.demo;
+&nbsp;
+&nbsp;import org.json.JSONArray;
+&nbsp;import org.json.JSONException;
+&nbsp;import org.json.JSONObject;
+&nbsp;
+&nbsp;import java.io.IOException;
+&nbsp;import java.nio.charset.StandardCharsets;
+&nbsp;import java.nio.file.Files;
+&nbsp;import java.nio.file.Path;
+&nbsp;import java.nio.file.Paths;
+&nbsp;import java.time.LocalDate;
+&nbsp;import java.util.*;
+&nbsp;
+&nbsp;public class FakeInfo {
+&nbsp;
+&nbsp;    public static final String GENDER_FEMININE = &quot;female&quot;;
+&nbsp;    public static final String GENDER_MASCULINE = &quot;male&quot;;
+&nbsp;
+&nbsp;    private static final String FILE_PERSON_NAMES = &quot;data/person-names.json&quot;;
+&nbsp;
+<b class="fc">&nbsp;    private static final String[] PHONE_PREFIXES = {</b>
+&nbsp;            &quot;2&quot;,&quot;30&quot;,&quot;31&quot;,&quot;40&quot;,&quot;41&quot;,&quot;42&quot;,&quot;50&quot;,&quot;51&quot;,&quot;52&quot;,&quot;53&quot;,&quot;60&quot;,&quot;61&quot;,&quot;71&quot;,&quot;81&quot;,&quot;91&quot;,&quot;92&quot;,&quot;93&quot;,
+&nbsp;            &quot;342&quot;,&quot;344&quot;,&quot;345&quot;,&quot;346&quot;,&quot;347&quot;,&quot;348&quot;,&quot;349&quot;,&quot;356&quot;,&quot;357&quot;,&quot;359&quot;,&quot;362&quot;,&quot;365&quot;,&quot;366&quot;,
+&nbsp;            &quot;389&quot;,&quot;398&quot;,&quot;431&quot;,&quot;441&quot;,&quot;462&quot;,&quot;466&quot;,&quot;468&quot;,&quot;472&quot;,&quot;474&quot;,&quot;476&quot;,&quot;478&quot;,&quot;485&quot;,&quot;486&quot;,
+&nbsp;            &quot;488&quot;,&quot;489&quot;,&quot;493&quot;,&quot;494&quot;,&quot;495&quot;,&quot;496&quot;,&quot;498&quot;,&quot;499&quot;,&quot;542&quot;,&quot;543&quot;,&quot;545&quot;,&quot;551&quot;,&quot;552&quot;,
+&nbsp;            &quot;556&quot;,&quot;571&quot;,&quot;572&quot;,&quot;573&quot;,&quot;574&quot;,&quot;577&quot;,&quot;579&quot;,&quot;584&quot;,&quot;586&quot;,&quot;587&quot;,&quot;589&quot;,&quot;597&quot;,&quot;598&quot;,
+&nbsp;            &quot;627&quot;,&quot;629&quot;,&quot;641&quot;,&quot;649&quot;,&quot;658&quot;,&quot;662&quot;,&quot;663&quot;,&quot;664&quot;,&quot;665&quot;,&quot;667&quot;,&quot;692&quot;,&quot;693&quot;,&quot;694&quot;,
+&nbsp;            &quot;697&quot;,&quot;771&quot;,&quot;772&quot;,&quot;782&quot;,&quot;783&quot;,&quot;785&quot;,&quot;786&quot;,&quot;788&quot;,&quot;789&quot;,&quot;826&quot;,&quot;827&quot;,&quot;829&quot;
+&nbsp;    };
+&nbsp;
+&nbsp;    private static final int MIN_BULK_PERSONS = 2;
+&nbsp;    private static final int MAX_BULK_PERSONS = 100;
+&nbsp;
+&nbsp;    private String cpr;
+&nbsp;    private String firstName;
+&nbsp;    private String lastName;
+&nbsp;    private String gender;
+&nbsp;    private String birthDate;
+<b class="fc">&nbsp;    private Map&lt;String, Object&gt; address = new HashMap&lt;&gt;();</b>
+&nbsp;    private String phone;
+&nbsp;
+<b class="fc">&nbsp;    private final Random random = new Random();</b>
+&nbsp;
+<b class="fc">&nbsp;    public FakeInfo() {</b>
+<b class="fc">&nbsp;        setFullNameAndGender();</b>
+<b class="fc">&nbsp;        setBirthDate();</b>
+<b class="fc">&nbsp;        setCpr();</b>
+<b class="fc">&nbsp;        setAddress();</b>
+<b class="fc">&nbsp;        setPhone();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void setCpr() {
+&nbsp;
+<b class="fc">&nbsp;        int finalDigit = random.nextInt(10);</b>
+&nbsp;
+<b class="fc">&nbsp;        if (gender.equals(GENDER_FEMININE) &amp;&amp; finalDigit % 2 == 1) {</b>
+<b class="fc">&nbsp;            finalDigit++;</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        cpr =</b>
+<b class="fc">&nbsp;                birthDate.substring(8, 10) +</b>
+<b class="fc">&nbsp;                birthDate.substring(5, 7) +</b>
+<b class="fc">&nbsp;                birthDate.substring(2, 4) +</b>
+<b class="fc">&nbsp;                getRandomDigit() +</b>
+<b class="fc">&nbsp;                getRandomDigit() +</b>
+<b class="fc">&nbsp;                getRandomDigit() +</b>
+&nbsp;                finalDigit;
+&nbsp;    }
+&nbsp;
+&nbsp;    private void setBirthDate() {
+&nbsp;
+<b class="fc">&nbsp;        int year = 1900 + random.nextInt(LocalDate.now().getYear() - 1900 + 1);</b>
+<b class="fc">&nbsp;        int month = 1 + random.nextInt(12);</b>
+&nbsp;        int day;
+&nbsp;
+<b class="fc">&nbsp;        if (Arrays.asList(1,3,5,7,8,10,12).contains(month)) {</b>
+<b class="fc">&nbsp;            day = 1 + random.nextInt(31);</b>
+<b class="fc">&nbsp;        } else if (Arrays.asList(4,6,9,11).contains(month)) {</b>
+<b class="fc">&nbsp;            day = 1 + random.nextInt(30);</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            day = 1 + random.nextInt(28);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        birthDate = String.format(&quot;%04d-%02d-%02d&quot;, year, month, day);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void setFullNameAndGender() {
+&nbsp;
+&nbsp;        try {
+<b class="fc">&nbsp;            String json = new String(Files.readAllBytes(Paths.get(FILE_PERSON_NAMES)));</b>
+&nbsp;
+<b class="fc">&nbsp;            JSONObject object = new JSONObject(json);</b>
+<b class="fc">&nbsp;            JSONArray persons = object.getJSONArray(&quot;persons&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;            JSONObject person = persons.getJSONObject(random.nextInt(persons.length()));</b>
+&nbsp;
+<b class="fc">&nbsp;            firstName = person.getString(&quot;firstName&quot;);</b>
+<b class="fc">&nbsp;            lastName = person.getString(&quot;lastName&quot;);</b>
+<b class="fc">&nbsp;            gender = person.getString(&quot;gender&quot;);</b>
+&nbsp;
+&nbsp;        } catch (IOException e) {
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;Error reading names JSON file&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private void setAddress() {
+&nbsp;
+<b class="fc">&nbsp;        address.put(&quot;street&quot;, getRandomText(40));</b>
+&nbsp;
+<b class="fc">&nbsp;        String number = String.valueOf(random.nextInt(999) + 1);</b>
+&nbsp;
+<b class="fc">&nbsp;        if (random.nextInt(10) &lt; 3) {</b>
+<b class="fc">&nbsp;            number += getRandomText(1,false).toUpperCase();</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        address.put(&quot;number&quot;, number);</b>
+&nbsp;
+<b class="fc">&nbsp;        if (random.nextInt(10) &lt; 4) {</b>
+<b class="fc">&nbsp;            address.put(&quot;floor&quot;,&quot;st&quot;);</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            address.put(&quot;floor&quot;, random.nextInt(99) + 1);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        int doorType = random.nextInt(20) + 1;</b>
+&nbsp;
+<b class="fc">&nbsp;        if (doorType &lt; 8) {</b>
+<b class="fc">&nbsp;            address.put(&quot;door&quot;,&quot;th&quot;);</b>
+<b class="fc">&nbsp;        } else if (doorType &lt; 15) {</b>
+<b class="fc">&nbsp;            address.put(&quot;door&quot;,&quot;tv&quot;);</b>
+<b class="fc">&nbsp;        } else if (doorType &lt; 17) {</b>
+<b class="fc">&nbsp;            address.put(&quot;door&quot;,&quot;mf&quot;);</b>
+<b class="fc">&nbsp;        } else if (doorType &lt; 19) {</b>
+<b class="fc">&nbsp;            address.put(&quot;door&quot;, random.nextInt(50) + 1);</b>
+&nbsp;        } else {
+&nbsp;
+<b class="fc">&nbsp;            String[] letters = {</b>
+&nbsp;                    &quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;,&quot;e&quot;,&quot;f&quot;,&quot;g&quot;,&quot;h&quot;,&quot;i&quot;,&quot;j&quot;,&quot;k&quot;,&quot;l&quot;,&quot;m&quot;,&quot;n&quot;,
+&nbsp;                    &quot;o&quot;,&quot;p&quot;,&quot;q&quot;,&quot;r&quot;,&quot;s&quot;,&quot;t&quot;,&quot;u&quot;,&quot;v&quot;,&quot;w&quot;,&quot;x&quot;,&quot;y&quot;,&quot;z&quot;,&quot;ø&quot;,&quot;æ&quot;,&quot;å&quot;
+&nbsp;            };
+&nbsp;
+<b class="fc">&nbsp;            String door = letters[random.nextInt(letters.length)];</b>
+&nbsp;
+<b class="fc">&nbsp;            if (doorType == 20) {</b>
+<b class="fc">&nbsp;                door += &quot;-&quot;;</b>
+&nbsp;            }
+&nbsp;
+<b class="fc">&nbsp;            door += random.nextInt(999) + 1;</b>
+&nbsp;
+<b class="fc">&nbsp;            address.put(&quot;door&quot;, door);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        Town town = new Town();</b>
+<b class="fc">&nbsp;        Map&lt;String,String&gt; townData = town.getRandomTown();</b>
+&nbsp;
+<b class="fc">&nbsp;        address.put(&quot;postal_code&quot;, townData.get(&quot;postal_code&quot;));</b>
+<b class="fc">&nbsp;        address.put(&quot;town_name&quot;, townData.get(&quot;town_name&quot;));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private static String getRandomText(int length) {
+<b class="fc">&nbsp;        return getRandomText(length,true);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private static String getRandomText(int length, boolean includeDanishCharacters) {
+&nbsp;
+<b class="fc">&nbsp;        String characters =</b>
+&nbsp;                &quot; abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;;
+&nbsp;
+<b class="fc">&nbsp;        if (includeDanishCharacters) {</b>
+<b class="fc">&nbsp;            characters += &quot;æøåÆØÅ&quot;;</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        Random random = new Random();</b>
+&nbsp;
+<b class="fc">&nbsp;        StringBuilder text = new StringBuilder();</b>
+&nbsp;
+<b class="fc">&nbsp;        text.append(characters.charAt(random.nextInt(characters.length()-1)+1));</b>
+&nbsp;
+<b class="fc">&nbsp;        for (int i = 1; i &lt; length; i++) {</b>
+<b class="fc">&nbsp;            text.append(characters.charAt(random.nextInt(characters.length())));</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return text.toString();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void setPhone() {
+&nbsp;
+<b class="fc">&nbsp;        String phone = PHONE_PREFIXES[random.nextInt(PHONE_PREFIXES.length)];</b>
+&nbsp;
+<b class="fc">&nbsp;        int prefixLength = phone.length();</b>
+&nbsp;
+<b class="fc">&nbsp;        for (int i = 0; i &lt; (8 - prefixLength); i++) {</b>
+<b class="fc">&nbsp;            phone += getRandomDigit();</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        this.phone = phone;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getCpr() {
+<b class="fc">&nbsp;        return cpr;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Map&lt;String,Object&gt; getFullNameAndGender() {
+&nbsp;
+<b class="fc">&nbsp;        Map&lt;String,Object&gt; data = new HashMap&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        data.put(&quot;firstName&quot;, firstName);</b>
+<b class="fc">&nbsp;        data.put(&quot;lastName&quot;, lastName);</b>
+<b class="fc">&nbsp;        data.put(&quot;gender&quot;, gender);</b>
+&nbsp;
+<b class="fc">&nbsp;        return data;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Map&lt;String,Object&gt; getFullNameGenderAndBirthDate() {
+&nbsp;
+<b class="fc">&nbsp;        Map&lt;String,Object&gt; data = new HashMap&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        data.put(&quot;firstName&quot;, firstName);</b>
+<b class="fc">&nbsp;        data.put(&quot;lastName&quot;, lastName);</b>
+<b class="fc">&nbsp;        data.put(&quot;gender&quot;, gender);</b>
+<b class="fc">&nbsp;        data.put(&quot;birthDate&quot;, birthDate);</b>
+&nbsp;
+<b class="fc">&nbsp;        return data;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Map&lt;String,Object&gt; getCprFullNameAndGender() {
+&nbsp;
+<b class="fc">&nbsp;        Map&lt;String,Object&gt; data = new HashMap&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        data.put(&quot;CPR&quot;, cpr);</b>
+<b class="fc">&nbsp;        data.put(&quot;firstName&quot;, firstName);</b>
+<b class="fc">&nbsp;        data.put(&quot;lastName&quot;, lastName);</b>
+<b class="fc">&nbsp;        data.put(&quot;gender&quot;, gender);</b>
+&nbsp;
+<b class="fc">&nbsp;        return data;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Map&lt;String,Object&gt; getCprFullNameGenderAndBirthDate() {
+&nbsp;
+<b class="fc">&nbsp;        Map&lt;String,Object&gt; data = new HashMap&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        data.put(&quot;CPR&quot;, cpr);</b>
+<b class="fc">&nbsp;        data.put(&quot;firstName&quot;, firstName);</b>
+<b class="fc">&nbsp;        data.put(&quot;lastName&quot;, lastName);</b>
+<b class="fc">&nbsp;        data.put(&quot;gender&quot;, gender);</b>
+<b class="fc">&nbsp;        data.put(&quot;birthDate&quot;, birthDate);</b>
+&nbsp;
+<b class="fc">&nbsp;        return data;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Map&lt;String,Map&lt;String, Object&gt;&gt; getAddress() {
+&nbsp;
+<b class="fc">&nbsp;        Map&lt;String,Map&lt;String, Object&gt;&gt; data = new HashMap&lt;&gt;();</b>
+<b class="fc">&nbsp;        data.put(&quot;address&quot;, address);</b>
+&nbsp;
+<b class="fc">&nbsp;        return data;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getPhoneNumber() {
+<b class="fc">&nbsp;        return phone;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Map&lt;String,Object&gt; getFakePerson() {
+&nbsp;
+<b class="fc">&nbsp;        Map&lt;String,Object&gt; data = new HashMap&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        data.put(&quot;CPR&quot;, cpr);</b>
+<b class="fc">&nbsp;        data.put(&quot;firstName&quot;, firstName);</b>
+<b class="fc">&nbsp;        data.put(&quot;lastName&quot;, lastName);</b>
+<b class="fc">&nbsp;        data.put(&quot;gender&quot;, gender);</b>
+<b class="fc">&nbsp;        data.put(&quot;birthDate&quot;, birthDate);</b>
+<b class="fc">&nbsp;        data.put(&quot;address&quot;, address);</b>
+<b class="fc">&nbsp;        data.put(&quot;phoneNumber&quot;, phone);</b>
+&nbsp;
+<b class="fc">&nbsp;        return data;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;Map&lt;String,Object&gt;&gt; getFakePersons(int amount) {
+&nbsp;
+<b class="fc">&nbsp;        if (amount &lt; MIN_BULK_PERSONS) amount = MIN_BULK_PERSONS;</b>
+<b class="fc">&nbsp;        if (amount &gt; MAX_BULK_PERSONS) amount = MAX_BULK_PERSONS;</b>
+&nbsp;
+<b class="fc">&nbsp;        List&lt;Map&lt;String,Object&gt;&gt; persons = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        for (int i = 0; i &lt; amount; i++) {</b>
+&nbsp;
+<b class="fc">&nbsp;            FakeInfo fake = new FakeInfo();</b>
+&nbsp;
+<b class="fc">&nbsp;            persons.add(fake.getFakePerson());</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return persons;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private static String getRandomDigit() {
+<b class="fc">&nbsp;        return String.valueOf(new Random().nextInt(10));</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2026-04-04 11:27</div>
+</div>
+</body>
+</html>
